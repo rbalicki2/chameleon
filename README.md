@@ -16,7 +16,7 @@ The goal of Chameleon is to allow you to completely separate styles from busines
 
 In this quick overview, we'll use Chameleon to make `<Section>` and `<Header>` components. By default, a `<Header>` component will render at 40px. However, within a `<Section>`, it ·will render at 35px. Within two nested sections, it will render at 30px, and so on.
 
-* **Step 1**: Create your `<UpdateContext>` and `<ContextProvider>` components. To do this, you need to use a reducer. Chameleon comes with several, out-of-the-box reducers. However, we're going to write our own:
+* **Step 1**: Create your `<UpdateContext>` and `<ContextProvider>` components. To do this, you need to use a reducer and plug it into `makeContextComponents`. Let's write one:
 
 ```js
 // StyleContext.js
@@ -210,16 +210,6 @@ const Header = propertyComponentGenerator(context => context.Header);
 ```
 
 * Combine `<ContextProvider>` and `<UpdateContext>` to make components (such as `<Panel>`'s, `<Section>`'s and `<Modal>`'s) which are styled in a specific way and which also update their context.
-
-* For simple projects, you can use the `defaultReducer`, which just updates fields on the context object. It is effectively:
-
-```js
-const defaultReducer = (previousContext, action) => {
-  ...previousContext,
-  ...action,
-};
-```
-* Conform to redux best practices! Create a `Types` enum, etc.
 
 ## Chameleon doesn't need to be for only styles
 
