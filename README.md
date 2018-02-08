@@ -6,15 +6,17 @@
 
 ## What is Chameleon?
 
-Chameleon is a library that allows you write components that are styled differently depending on where they are in your app. A `Header` component might render at 40px by default, or at 35px within a `Panel`. It might be colored blue by default, or yellow in night mode.
+Chameleon is a library that allows you write components that are styled differently depending on where they are in your app. A `<Header>` component might render at 40px by default, or at 35px within a `<Panel>`. It might be colored blue by default, or yellow in night mode.
+
+Styles changes in Chameleon are handled very simply. Style information is passed down through React's context. This context is updated using special components which dispatch events to a `contextReducer`. Display components read that context and render appropriately. That's it!
 
 The goal of Chameleon is to allow you to completely separate styles from business logic.
 
 ## Quick overview of how to use Chameleon
 
-In this quick overview, we'll use Chameleon to make `Section` and `Header` components. By default, a `Header` component will render at 40px. However, within a `Section`, it ·will render at 35px. Within two nested sections, it will render at 30px, and so on.
+In this quick overview, we'll use Chameleon to make `<Section>` and `<Header>` components. By default, a `<Header>` component will render at 40px. However, within a `<Section>`, it ·will render at 35px. Within two nested sections, it will render at 30px, and so on.
 
-* **Step 1**: Create your `UpdateContext` and `ContextProvider` components. To do this, you need to use a reducer. Chameleon comes with several, out-of-the-box reducers. However, we're going to write our own:
+* **Step 1**: Create your `<UpdateContext>` and `<ContextProvider>` components. To do this, you need to use a reducer. Chameleon comes with several, out-of-the-box reducers. However, we're going to write our own:
 
 ```js
 // StyleContext.js
