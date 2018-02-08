@@ -2,6 +2,8 @@
 
 > Never mix business logic and styles again!
 
+<img src="https://www.stickers-factory.com/media/catalog/product/cache/1/image/1000x/040ec09b1e35df139433887a97daa66f/0/9/09361_00.png" height="100px" width="auto" />
+
 ## What is Chameleon?
 
 Chameleon is a library that allows you write components that take on different styles depending on where they are in your app. For example, a `Header` component might render at 40px by default, or at 35px within a panel. It might be colored blue by default, or yellow in night mode.
