@@ -6,9 +6,9 @@
 
 ## What is Chameleon?
 
-Chameleon is a library that allows you write components that take on different styles depending on where they are in your app. For example, a `Header` component might render at 40px by default, or at 35px within a panel. It might be colored blue by default, or yellow in night mode.
+Chameleon is a library that allows you write components that are styled differently depending on where they are in your app. For example, a `Header` component might render at 40px by default, or at 35px within a panel. It might be colored blue by default, or yellow in night mode.
 
-The goal of Chameleon is to allow you to completely separate styles from business logic: *never worry about styles again!*
+The goal of Chameleon is to allow you to completely separate styles from business logic: *never muck around with styles again!*
 
 ## Quick overview of how to use Chameleon
 
@@ -133,7 +133,7 @@ class StyleContext {
       DAY: `
         color: blue;
         &:hover {
-          color: Cyan;
+          color: cyan;
         }
       `,
     })[this.context.mode];
@@ -196,7 +196,7 @@ const IncrementSectionDepth = ({ children }) => (<UpdateContext type="INCREMENT_
 </UpdateContext>);
 ```
 
-* Use the `propertyComponentGenerator`, which is a convenient wrapper for very simple components. For example, the following are equivalent:
+* Use the `propertyComponentGenerator`. `makeContextComponents` also returns `propertyComponentGenerator`, which is a convenient wrapper for very simple components. For example, the following are equivalent:
 
 ```js
 const Header = ({ ...props }) => (<ContextProvider>{ context =>
@@ -205,7 +205,8 @@ const Header = ({ ...props }) => (<ContextProvider>{ context =>
 const Header = propertyComponentGenerator(context => context.Header);
 ```
 
-* Conform to redux best practices! Create a `Types` enum, etc.
+* Combine `ContextProvider` and `UpdateContext` to make components (such as `<Panel>`s, `<Section>`s and `<Modal>`s) which are styled in a specific way and which also update their context.
+
 * For simple projects, you can use the `defaultReducer`, which just updates fields on the context object. It is effectively:
 
 ```js
@@ -214,6 +215,7 @@ const defaultReducer = (previousContext, action) => {
   ...action,
 };
 ```
+* Conform to redux best practices! Create a `Types` enum, etc.
 
 ## Chameleon doesn't need to be for only styles
 
