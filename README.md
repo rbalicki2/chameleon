@@ -1,29 +1,18 @@
 # Chameleon JS
 
-> Business logic and 
+> Separate your business logic from your styling.
 
 ## What is Chameleon JS?
 
-Chameleons JS is a library that facilitates the separation of style from content through the use context. The goal of the library is to allow you to write components that are automatically styled correctly, even they are moved to a different part of the app.
+Chameleon JS is a library that allows you write components that take on different styles depending on where they are in your app. For example, a `Header` component might render at 40px by default, or at 35px within a panel. It might be colored blue by default, or yellow in night mode.
 
-For example, you should be able to move a `Title` component unchanged from a jumbotron and into a panel, and have it style itself correctly in both situations. The following should also work:
-
-```jsx
-<Heading>This title will be rendered as an h1</Heading>
-<Section>
-  <Heading>This title will be rendered as an h2</Heading>
-</Section>
-```
-
-## Why Chameleon JS?
-
-
+The goal of Chameleon JS is to allow you to completely separate styles from business logic: *never worry about styles again!*
 
 ## Quick overview of how to use Chameleon JS
 
-In this quick overview, we'll use Chameleon JS to make a `Section` and `Header` components. By default, the `Header` component will render as an `h1`. However, within a `Section`, it will render as an `h2`. Within two nested sections, it will render as an `h3`, and so on.
+In this quick overview, we'll use Chameleon JS to make `Section` and `Header` components. By default, a `Header` component will render at 40px. However, within a `Section`, it ·will render at 35px. Within two nested sections, it will render at 30px, and so on.
 
-* You create your `ContextChanger` by initializing it with a reducer. This package comes with several, out-of-the-box reducers for you to use. However, we're going to make our own:
+* **Step 1**: Create your `UpdateContext` and `ContextProvider` components. To do this, you need to write a reducer. This package comes with several, out-of-the-box reducers for you to use. However, we're going to make our own:
 
 ```js
 // StyleContext.js
@@ -49,7 +38,7 @@ export {
 };
 ```
 
-* Let's make a quick section component that wraps `UpdateContext`.
+* **Step 2**: Make a `<Section>` component that wraps `UpdateContext`.
 
 ```js
 // Section.js
@@ -66,9 +55,11 @@ export default ({ children }) => (<UpdateContext type="INCREMENT_SECTION_DEPTH">
 // Header.js
 import { ContextProvider } from './StyleContext';
 
-export default const ({ children }) => (<ContextProvider>{style => {
-  const HeaderTag = `h${style.sectionDepth + 1}`;
-  return <HeaderTag>{ children }</HeaderTag>;
+export default const ({ children }) => (<ContextProvider>{context => {
+  const Header = styled.span`
+    fontSize: ${40 - context.sectionDepth * 5}px; 
+  `;
+  return <Header>{ children }</Header>;
 }}</ContextProvider>);
 ```
 
@@ -78,9 +69,9 @@ export default const ({ children }) => (<ContextProvider>{style => {
 const MyArticle = () => (<div>
   <Header>How To Use Chameleon JS</Header>
   <Section>
-    <Header>This subheader is an h2</Header>
+    <Header>This subheader is at 35px</Header>
     <Section>
-      <Header>This sub-sub-header is an h3!</Header>
+      <Header>This sub-sub-header is at 30px! Neat!</Header>
     </Section>
   </Section>
 </div>);
@@ -90,19 +81,17 @@ const MyArticle = () => (<div>
 
 Chameleon JS can be used to manage anything that's unrelated to the components used. For example:
 
-* Color palette (e.g. "night mode" vs "day mode", or different color schemes for different sections in a marketing site). Pair this with CSS transitions and watch your whole site transition!
-* Modify the font size, color, etc. of elements when they exist within a modal or panel, or when nested within two panels!
-  * Not just text, 
-* Control flex or css grid layout of children.
+* Color palette (e.g. "night mode" vs "day mode", or color schemes that vary across sections of a marketing site). Pair this with CSS transitions and watch your whole site transition!
+* Modify the font size, color, etc. of elements when they exist within a modal, panel or section, or when nested within two panels!
 * Turn off `pointer-events` and modify the `cursor` for a section of the site that is disabled, or which is behind a modal.
-  * A more interesting example is preventing click interactions on existing elements to allow the user to specify which element of the website is malfunctioning.
+  * An interesting application could be a "report a bug" feature. When one clicks on a button saying "some part of the site isn't working", you could use Chameleon JS to intercept onClick events, but still allow the user to click on the broken piece of functionality.
+* Control flex or css grid layout of children.
 * Padding: use Chameleon JS to control the left-padding of nested comments.
 * Manage heading levels, as in the previous example.
-* Prevent the selection of text.
 
 ## Recommended patterns
 
-For the sake of brevity, the minimal example omits several patterns and advance features.
+For the sake of brevity, the minimal example omits several patterns and advanced features.
 
 * Create components that wrap `<UpdateContext>`. In the minimal example, there's no reason to simplify the API. But once you start passing more parameters to `<UpdateContext>`, you will benefit from components like the following:
 
@@ -120,53 +109,48 @@ const NightMode = ({ children }) => <UpdateContext
 </UpdateContext>
 ```
 
-Note: You can also consider simplifying your action's API. `type="CHANGE_MODE" mode="NIGHT"` might be sufficient.
+Note: You can also consider simplifying your action's API. `type="CHANGE_MODE" mode="NIGHT"` might be sufficient, and not require a wrapping component.
 
-* Wrap the context in a class, and have derived setters and getters. Follow immutable-js's pattern: have all setters return a new, modified instance. *Both of these are very important for larger projects.* Example:
+* Wrap the context in a class, and have derived setters and getters. Make the class immutable by having all setters return a new instance. **Both of these are very important for larger projects.** Example:
 
 ```js
 // StyleContext.js
 class StyleContext {
   constructor(context) {
-    // context has the form
-    // {
-    //   mode: 'NIGHT' | 'DAY',
-    //   sectionDepth: number,
-    // }
-    // In practice, you should use TypeScript, Flow or a runtime type-checker for this.
     this.context = context;
   }
 
   get foregroundStyleFromMode() {
     return ({
-      NIGHT: {
-        color: 'white',
-      },
-      DAY: {
-        color: 'black',
-      },
+      NIGHT: `
+        color: yellow;
+        &:hover {
+          color: gold; 
+        }
+      `,
+      DAY: `
+        color: blue;
+        &:hover {
+          color: Cyan;
+        }
+      `,
     })[this.context.mode];
   }
 
-  get styleFromsectionDepth() {
-    return {
-      size: 45 - 5 * this.context.sectionDepth,
-      lineHeight: '1em',
-      fontWeight: 900 - 100 * this.context.sectionDepth,
-      marginBottom: 20 - 2 * this.context.sectionDepth,
-    };
+  get headingStyleFromSectionDepth() {
+    return `
+      font-size: ${40 - 5 * this.context.sectionDepth}px;
+      line-height: 1em;
+      font-weight: ${800 - 100 * this.context.sectionDepth};
+      margin-bottom: ${20 - 2 * this.context.sectionDepth}px;
+    `;
   }
 
-  get headingStyle() {
-    return {
-      ...(this.forgegroundStyleFromMode),
-      ...(this.styleFromsectionDepth),
-    };
-  }
-
-  get HeadingComponent() {
-    // in practice, you might want all your headings to be span's :)
-    return `h${this.context.sectionDepth + 1}`;
+  get Header() {
+    return styled.span`
+      ${this.foregroundStyleFromMode}
+      ${this.headingStyleFromSectionDepth}
+    `;
   }
 
   incrementSectionDepth() {
@@ -186,19 +170,18 @@ const contextReducer = (previousContext, action) => {
   return previousContext;
 }
 
-// Header
-export default ({ children, ...props }) => (<ContextProvider>{ context =>
-  // ...props passes on onClick handlers, etc.
-  <context.HeadingComponent
-    style={context.headingStyle}
-    { ...props }
-  >
-    { children }
-  </context.HeadingComponent>;
+// Header.js
+export default (props) => (<ContextProvider>{ context =>
+  <context.Header { ...props } />
 }</ContextProvider>);
 ```
 
-* Use the [prop getters](https://blog.kentcdodds.com/how-to-give-rendering-control-to-users-with-prop-getters-549eaef76acf) pattern (not shown in the previous example).
+Let's take a minute to appreciate what we've achieved here. We have a `Header` component that is styled correctly in night and day modes, and which gets progressively smaller as it is wrapped in more sections. It even has correct hover behavior, thanks to the magic of styled components!
+
+Furthermore, we have a clean API (`contextReducer`) for making multiple updates to the context! This means that, whenever we use a component that updates the context (a `<Panel>`, or a component that indicates a modal has been overlaid), we don't need to worry about knowing the whole context. We just need to know how *this one component modifies it*.
+
+Lastly, we have set ourselves up for maximal code reuse. Many components (buttons, headings, emphasized text, etc.) might re-use the same colors, allowing us to reuse `get foregroundStyleFromMode`.
+
 * Use the `updateContextGenerator`. `makeContextComponents` also returns `updateContextGenerator`, which is a convenient wrapper around `UpdateContext`. Example:
 
 ```js
@@ -209,6 +192,15 @@ const IncrementSectionDepth = updateContextGenerator({ type: 'INCREMENT_SECTION_
 const IncrementSectionDepth = ({ children }) => (<UpdateContext type="INCREMENT_SECTION_DEPTH">
   { children }
 </UpdateContext>);
+```
+
+* Use the `propertyComponentGenerator`, which is a convenient wrapper for very simple components. For example, the following are equivalent:
+
+```js
+const Header = ({ ...props }) => (<ContextProvider>{ context =>
+  <context.Header { ...props } />
+}</ContextProvider>);
+const Header = propertyComponentGenerator(context => context.Header);
 ```
 
 * Conform to redux best practices! Create a `Types` enum, etc.
@@ -223,8 +215,7 @@ const defaultReducer = (previousContext, action) => {
 
 ## Chameleon JS doesn't need to be for only styles
 
-* You're right, but in my opinion, non-style props (business logic) should probably be passed down explicitly with props.
-* Nonetheless, there's nothing stopping you. Do what's right for your project!
+* You're right. Any props that are passed purely downward through the component heirarchy can be passed through context in this way. Do what's right for your project!
 
 ## Full API
 
@@ -232,25 +223,24 @@ Throughout this section, we will use `<C>` or `C` to refer to the type of the co
 
 ### function `makeContextComponents`
 
+`makeContextComponents` is a function which takes a reducer and an initial context, and returns `{ UpdateContext, ContextProvider, updateContextGenerator, propertyComponentGenerator }`.
+
 Signature: 
 ```js
 (Reducer<C, A>, C) => {
   UpdateContext: UpdateContext<A>,
   ContextProvider: ContextProvider<C>,
   updateContextGenerator: UpdateContextGenerator<A>,
+  propertyComponentGenerator: PropertyComponentGenerator<C>,
 }
 ```
 
-i.e. a function which takes a reducer and an initial context, and returns a hash.
-
 ### type `Reducer<C, A>`
 
-A function, whose signature is:
+This is a function that takes the oldContext and the action, and returns a new context. It's signature is:
 ```js
 (C, A) => C
 ```
-
-i.e. a function of `(oldContext, action) => newContext`
 
 ### type `UpdateContext<A>`
 
@@ -260,10 +250,72 @@ A component whose props are of type `<A>` and which renders its children.
 
 A render-prop component which passes the current context, of type `C` to its children.
 
-### type `updateContextGenerator<A>`
+### type `UpdateContextGenerator<A>`
 
-A wrapper that makes a generic component that always passes the same action `A` to the reducer.
+A function that takes an action, and which returns a component that always passes the same action to the reducer.
 
-## TODO
+### type `PropertyComponentGenerator<C>`
 
-* Rewrite README with styled components
+A function whose signature is:
+
+```js
+(C => component) => component
+```
+
+An example can illustrate this better. The following are equivalent:
+
+```js
+const Header = (props) => (<ContextProvider>{ context =>
+  <context.Header { ...props } />
+}</ContextProvider>);
+const Header = propertyComponentGenerator(context => context.Header);
+```
+
+## FAQ
+
+### Why update context with reducers?
+
+* Reducers are a great way to handle multiple updates to a single model (the context), without knowing everything about the context up until that point. For example, in the following component tree:
+
+```js
+<UpdateContext type="INCREMENT_SECTION_DEPTH">
+  <UpdateContext type="INVERT_COLORS">
+    1
+  </UpdateContext>
+</UpdateContext>
+```
+
+Both calls to the component reducer only need to know how to do their specific update, rather than having knowledge of all of the context.
+
+* In addition, reducers allow us to cache intermediate results, resulting in efficiency gains. In the following component tree:
+
+```js
+<UpdateContext type="INCREMENT_SECTION_DEPTH">
+  <UpdateContext type="INVERT_COLORS">
+    1
+  </UpdateContext>
+  <UpdateContext type="MAKE_EVERYTHING_BACKWARDS">
+    2
+  </UpdateContext>
+</UpdateContext>
+```
+
+The context at 1 is:
+
+```js
+contextReducer(
+  contextReducer(initialContext, { type: 'INCREMENT_SECTION_DEPTH'}),
+  { type: 'INVERT_COLORS' }
+)
+```
+
+and the context at 2 is:
+
+```js
+contextReducer(
+  contextReducer(initialContext, { type: 'INCREMENT_SECTION_DEPTH'}),
+  { type: 'MAKE_EVERYTHING_BACKWARDS' }
+)
+```
+
+`contextReducer(initialContext, { type: 'INCREMENT_SECTION_DEPTH'})` is reused in both cases, and Chameleon JS makes sure to reuse that intermediate result!
