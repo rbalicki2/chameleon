@@ -213,7 +213,7 @@ const Header = propertyComponentGenerator(context => context.Header);
 
 ## Chameleon doesn't need to be for only styles
 
-* You're right. Any props that are passed purely downward through the component heirarchy can be passed through context in this way. Do what's right for your project!
+You're right. Do what's right for your project!
 
 ## Full API
 
