@@ -182,7 +182,7 @@ export default (props) => (<ContextProvider>{ context =>
 
 Let's take a minute to appreciate what we've achieved here. We have a `<Header>` component that is styled correctly in night and day modes, and which gets progressively smaller as it is wrapped in more sections. It even has correct hover behavior, thanks to the magic of styled components!
 
-Furthermore, we have a clean API (`contextReducer`) for making multiple updates to the context! This means that, whenever we use a component that updates the context (a `<Panel>`, or a component that indicates a modal has been overlaid), we don't need to worry about knowing the whole context. We just need to know how *this one component modifies it*.
+Furthermore, we have a clean API (`contextReducer`) for making multiple updates to the context! This means that, whenever we use a component that updates the context (a `<Panel>`, or a component that indicates a modal has been overlaid), we don't need to worry about the whole context. We just need to know about the incremental change that we are making.
 
 Lastly, we have set ourselves up for maximal code reuse. Many components (buttons, headings, emphasized text, etc.) might re-use the same colors, allowing us to reuse `get foregroundStyleFromMode`.
 
@@ -207,7 +207,7 @@ const Header = ({ ...props }) => (<ContextProvider>{ context =>
 const Header = propertyComponentGenerator(context => context.Header);
 ```
 
-* Combine `<ContextProvider>` and `<UpdateContext>` to make components (such as `<Panel>`s, `<Section>`s and `<Modal>`s) which are styled in a specific way and which also update their context.
+* Combine `<ContextProvider>` and `<UpdateContext>` to make components (such as `<Panel>`'s, `<Section>`'s and `<Modal>`'s) which are styled in a specific way and which also update their context.
 
 * For simple projects, you can use the `defaultReducer`, which just updates fields on the context object. It is effectively:
 
