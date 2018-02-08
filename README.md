@@ -113,7 +113,7 @@ const NightMode = ({ children }) => <UpdateContext
 
 Note: You can also consider simplifying your action's API. `type="CHANGE_MODE" mode="NIGHT"` might be sufficient, and not require a wrapping component.
 
-* Wrap the context in a class, and have derived setters and getters. Make the class immutable by having all setters return a new instance. **Both of these are very important for larger projects.** Example:
+* Wrap the context in a class, and have derived setters and getters. Make the class immutable by having all setters return a new instance of the class. **Both of these are very important for larger projects.** Example:
 
 ```js
 // StyleContext.js
