@@ -14,7 +14,7 @@ The goal of Chameleon is to allow you to completely separate styles from busines
 
 In this quick overview, we'll use Chameleon to make `Section` and `Header` components. By default, a `Header` component will render at 40px. However, within a `Section`, it ·will render at 35px. Within two nested sections, it will render at 30px, and so on.
 
-* **Step 1**: Create your `UpdateContext` and `ContextProvider` components. To do this, you need to write a reducer. This package comes with several, out-of-the-box reducers for you to use. However, we're going to make our own:
+* **Step 1**: Create your `UpdateContext` and `ContextProvider` components. To do this, you need to write a reducer. Chameleon comes with several, out-of-the-box reducers for you to use. However, we're going to make our own:
 
 ```js
 // StyleContext.js
