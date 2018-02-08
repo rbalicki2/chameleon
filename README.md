@@ -1,6 +1,6 @@
 # Chameleon JS
 
-> Never worry about styling again
+> Business logic and 
 
 ## What is Chameleon JS?
 
@@ -199,7 +199,7 @@ export default ({ children, ...props }) => (<ContextProvider>{ context =>
 ```
 
 * Use the [prop getters](https://blog.kentcdodds.com/how-to-give-rendering-control-to-users-with-prop-getters-549eaef76acf) pattern (not shown in the previous example).
-* Use the `updateContextGenerator`. `makeContextComponents` also returns `updateContextGenerator`, which is a convenient wrpaper around `UpdateContext`. Example:
+* Use the `updateContextGenerator`. `makeContextComponents` also returns `updateContextGenerator`, which is a convenient wrapper around `UpdateContext`. Example:
 
 ```js
 const { UpdateContext, updateContextGenerator } = makeContextComponents(contextReducer, initialContext);
@@ -263,3 +263,7 @@ A render-prop component which passes the current context, of type `C` to its chi
 ### type `updateContextGenerator<A>`
 
 A wrapper that makes a generic component that always passes the same action `A` to the reducer.
+
+## TODO
+
+* Rewrite README with styled components
