@@ -8,7 +8,7 @@
 
 Chameleon is a library that allows you write components that are styled differently depending on where they are in your app. A `<Header>` component might render at 40px by default, or at 35px within a `<Panel>`. It might be colored blue by default, or yellow in night mode.
 
-Styles changes in Chameleon are handled very simply. Style information is passed down through React's context. This context is updated using a `contextReducer`. Display components read that context and render appropriately. That's it!
+Styles changes in Chameleon are handled very simply. Style information is passed down through React's context. This context is updated using a `contextReducer`. Presentational components read that context and render appropriately. That's it!
 
 The goal of Chameleon is to allow you to completely separate styles from business logic.
 
