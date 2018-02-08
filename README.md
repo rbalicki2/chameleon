@@ -1,16 +1,16 @@
-# Chameleon JS
+# Chameleon
 
-> Separate your business logic from your styling.
+> Never mix business logic and styles again!
 
-## What is Chameleon JS?
+## What is Chameleon?
 
-Chameleon JS is a library that allows you write components that take on different styles depending on where they are in your app. For example, a `Header` component might render at 40px by default, or at 35px within a panel. It might be colored blue by default, or yellow in night mode.
+Chameleon is a library that allows you write components that take on different styles depending on where they are in your app. For example, a `Header` component might render at 40px by default, or at 35px within a panel. It might be colored blue by default, or yellow in night mode.
 
-The goal of Chameleon JS is to allow you to completely separate styles from business logic: *never worry about styles again!*
+The goal of Chameleon is to allow you to completely separate styles from business logic: *never worry about styles again!*
 
-## Quick overview of how to use Chameleon JS
+## Quick overview of how to use Chameleon
 
-In this quick overview, we'll use Chameleon JS to make `Section` and `Header` components. By default, a `Header` component will render at 40px. However, within a `Section`, it ·will render at 35px. Within two nested sections, it will render at 30px, and so on.
+In this quick overview, we'll use Chameleon to make `Section` and `Header` components. By default, a `Header` component will render at 40px. However, within a `Section`, it ·will render at 35px. Within two nested sections, it will render at 30px, and so on.
 
 * **Step 1**: Create your `UpdateContext` and `ContextProvider` components. To do this, you need to write a reducer. This package comes with several, out-of-the-box reducers for you to use. However, we're going to make our own:
 
@@ -67,7 +67,7 @@ export default const ({ children }) => (<ContextProvider>{context => {
 
 ```js
 const MyArticle = () => (<div>
-  <Header>How To Use Chameleon JS</Header>
+  <Header>How To Use Chameleon</Header>
   <Section>
     <Header>This subheader is at 35px</Header>
     <Section>
@@ -77,16 +77,16 @@ const MyArticle = () => (<div>
 </div>);
 ```
 
-## That was a silly, contrived example... what else should one use Chameleon JS for?
+## That was a silly, contrived example... what else should one use Chameleon for?
 
-Chameleon JS can be used to manage anything that's unrelated to the components used. For example:
+Chameleon can be used to manage anything that's unrelated to the components used. For example:
 
 * Color palette (e.g. "night mode" vs "day mode", or color schemes that vary across sections of a marketing site). Pair this with CSS transitions and watch your whole site transition!
 * Modify the font size, color, etc. of elements when they exist within a modal, panel or section, or when nested within two panels!
 * Turn off `pointer-events` and modify the `cursor` for a section of the site that is disabled, or which is behind a modal.
-  * An interesting application could be a "report a bug" feature. When one clicks on a button saying "some part of the site isn't working", you could use Chameleon JS to intercept onClick events, but still allow the user to click on the broken piece of functionality.
+  * An interesting application could be a "report a bug" feature. When one clicks on a button saying "some part of the site isn't working", you could use Chameleon to intercept onClick events, but still allow the user to click on the broken piece of functionality.
 * Control flex or css grid layout of children.
-* Padding: use Chameleon JS to control the left-padding of nested comments.
+* Padding: use Chameleon to control the left-padding of nested comments.
 * Manage heading levels, as in the previous example.
 
 ## Recommended patterns
@@ -213,7 +213,7 @@ const defaultReducer = (previousContext, action) => {
 };
 ```
 
-## Chameleon JS doesn't need to be for only styles
+## Chameleon doesn't need to be for only styles
 
 * You're right. Any props that are passed purely downward through the component heirarchy can be passed through context in this way. Do what's right for your project!
 
@@ -318,4 +318,4 @@ contextReducer(
 )
 ```
 
-`contextReducer(initialContext, { type: 'INCREMENT_SECTION_DEPTH'})` is reused in both cases, and Chameleon JS makes sure to reuse that intermediate result!
+`contextReducer(initialContext, { type: 'INCREMENT_SECTION_DEPTH'})` is reused in both cases, and Chameleon makes sure to reuse that intermediate result!
