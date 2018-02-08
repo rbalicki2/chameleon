@@ -6,7 +6,7 @@
 
 ## What is Chameleon?
 
-Chameleon is a library that allows you write components that are styled differently depending on where they are in your app. For example, a `Header` component might render at 40px by default, or at 35px within a panel. It might be colored blue by default, or yellow in night mode.
+Chameleon is a library that allows you write components that are styled differently depending on where they are in your app. For example, a `Header` component might render at 40px by default, or at 35px within a `Panel`. It might be colored blue by default, or yellow in night mode.
 
 The goal of Chameleon is to allow you to completely separate styles from business logic: *never muck around with styles again!*
 
@@ -40,7 +40,7 @@ export {
 };
 ```
 
-* **Step 2**: Make a `<Section>` component that wraps `UpdateContext`.
+* **Step 2**: Make a `Section` component that wraps `UpdateContext`.
 
 ```js
 // Section.js
@@ -95,7 +95,7 @@ Chameleon can be used to manage anything that's unrelated to the components used
 
 For the sake of brevity, the minimal example omits several patterns and advanced features.
 
-* Create components that wrap `<UpdateContext>`. In the minimal example, there's no reason to simplify the API. But once you start passing more parameters to `<UpdateContext>`, you will benefit from components like the following:
+* Create components that wrap `UpdateContext`. In the minimal example, there's no reason to simplify the API. But once you start passing more parameters to `UpdateContext`, you will benefit from components like the following:
 
 ```js
 // Nightmode.js
@@ -180,7 +180,7 @@ export default (props) => (<ContextProvider>{ context =>
 
 Let's take a minute to appreciate what we've achieved here. We have a `Header` component that is styled correctly in night and day modes, and which gets progressively smaller as it is wrapped in more sections. It even has correct hover behavior, thanks to the magic of styled components!
 
-Furthermore, we have a clean API (`contextReducer`) for making multiple updates to the context! This means that, whenever we use a component that updates the context (a `<Panel>`, or a component that indicates a modal has been overlaid), we don't need to worry about knowing the whole context. We just need to know how *this one component modifies it*.
+Furthermore, we have a clean API (`contextReducer`) for making multiple updates to the context! This means that, whenever we use a component that updates the context (a `Panel`, or a component that indicates a modal has been overlaid), we don't need to worry about knowing the whole context. We just need to know how *this one component modifies it*.
 
 Lastly, we have set ourselves up for maximal code reuse. Many components (buttons, headings, emphasized text, etc.) might re-use the same colors, allowing us to reuse `get foregroundStyleFromMode`.
 
@@ -205,7 +205,7 @@ const Header = ({ ...props }) => (<ContextProvider>{ context =>
 const Header = propertyComponentGenerator(context => context.Header);
 ```
 
-* Combine `ContextProvider` and `UpdateContext` to make components (such as `<Panel>`s, `<Section>`s and `<Modal>`s) which are styled in a specific way and which also update their context.
+* Combine `ContextProvider` and `UpdateContext` to make components (such as `Panel`s, `Section`s and `Modal`s) which are styled in a specific way and which also update their context.
 
 * For simple projects, you can use the `defaultReducer`, which just updates fields on the context object. It is effectively:
 
