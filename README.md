@@ -87,7 +87,7 @@ Chameleon is for managing all aspects of style. For example:
 * It can manage the color palette or theme (e.g. having separate night and day modes, or varying color schemes across sections of a marketing site). Pair this with CSS transitions and watch your whole site effortlessly transition!
 * It can modify the font size, color, etc. of elements when they are placed within a modal, panel or section, or when nested within two panels!
 * Turn off `pointer-events` and modify the `cursor` for a section of the site that is disabled, or which is behind a modal.
-* Control flex, css grid or regular layout of children. For an example, a `<FormGroup>` can render differently within an `InlineForm` or within a `Form`.
+* Control flex, css grid or regular layout of children. For an example, a `<FormGroup>` can render differently within an `<InlineForm>` or within a `<Form>`.
 * Padding: use Chameleon to control the left-padding of nested comments.
 * Manage heading levels, as in the previous example.
 
@@ -95,7 +95,7 @@ Chameleon is for managing all aspects of style. For example:
 
 For the sake of brevity, the minimal example omits several patterns and advanced features.
 
-* Create components that wrap `UpdateContext`. In the minimal example, there's no reason to simplify the API. But once you start passing more parameters to `UpdateContext`, you will benefit from components like the following:
+* Create components that wrap `<UpdateContext>`. In the minimal example, there's no reason to simplify the API. But once you start passing more parameters to `<UpdateContext>`, you will benefit from components like the following:
 
 ```js
 // Nightmode.js
@@ -180,13 +180,13 @@ export default (props) => (<ContextProvider>{ context =>
 }</ContextProvider>);
 ```
 
-Let's take a minute to appreciate what we've achieved here. We have a `Header` component that is styled correctly in night and day modes, and which gets progressively smaller as it is wrapped in more sections. It even has correct hover behavior, thanks to the magic of styled components!
+Let's take a minute to appreciate what we've achieved here. We have a `<Header>` component that is styled correctly in night and day modes, and which gets progressively smaller as it is wrapped in more sections. It even has correct hover behavior, thanks to the magic of styled components!
 
-Furthermore, we have a clean API (`contextReducer`) for making multiple updates to the context! This means that, whenever we use a component that updates the context (a `Panel`, or a component that indicates a modal has been overlaid), we don't need to worry about knowing the whole context. We just need to know how *this one component modifies it*.
+Furthermore, we have a clean API (`contextReducer`) for making multiple updates to the context! This means that, whenever we use a component that updates the context (a `<Panel>`, or a component that indicates a modal has been overlaid), we don't need to worry about knowing the whole context. We just need to know how *this one component modifies it*.
 
 Lastly, we have set ourselves up for maximal code reuse. Many components (buttons, headings, emphasized text, etc.) might re-use the same colors, allowing us to reuse `get foregroundStyleFromMode`.
 
-* Use the `updateContextGenerator`. `makeContextComponents` also returns `updateContextGenerator`, which is a convenient wrapper around `UpdateContext`. Example:
+* Use the `updateContextGenerator`. `makeContextComponents` also returns `updateContextGenerator`, which is a convenient wrapper around `<UpdateContext>`. Example:
 
 ```js
 const { UpdateContext, updateContextGenerator } = makeContextComponents(contextReducer, initialContext);
@@ -207,7 +207,7 @@ const Header = ({ ...props }) => (<ContextProvider>{ context =>
 const Header = propertyComponentGenerator(context => context.Header);
 ```
 
-* Combine `ContextProvider` and `UpdateContext` to make components (such as `Panel`s, `Section`s and `Modal`s) which are styled in a specific way and which also update their context.
+* Combine `<ContextProvider>` and `<UpdateContext>` to make components (such as `<Panel>`s, `<Section>`s and `<Modal>`s) which are styled in a specific way and which also update their context.
 
 * For simple projects, you can use the `defaultReducer`, which just updates fields on the context object. It is effectively:
 
