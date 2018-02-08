@@ -87,7 +87,6 @@ Chameleon is for managing all aspects of style. For example:
 * It can manage the color palette or theme (e.g. having separate night and day modes, or varying color schemes across sections of a marketing site). Pair this with CSS transitions and watch your whole site effortlessly transition!
 * It can modify the font size, color, etc. of elements when they are placed within a modal, panel or section, or when nested within two panels!
 * Turn off `pointer-events` and modify the `cursor` for a section of the site that is disabled, or which is behind a modal.
-  * An interesting application could be a "report a bug" feature. When one clicks on a button saying "some part of the site isn't working", you could use Chameleon to intercept onClick events, but still allow the user to click on the broken piece of functionality.
 * Control flex, css grid or regular layout of children. For an example, a `<FormGroup>` can render differently within an `InlineForm` or within a `Form`.
 * Padding: use Chameleon to control the left-padding of nested comments.
 * Manage heading levels, as in the previous example.
