@@ -6,15 +6,15 @@
 
 ## What is Chameleon?
 
-Chameleon is a library that allows you write components that are styled differently depending on where they are in your app. For example, a `Header` component might render at 40px by default, or at 35px within a `Panel`. It might be colored blue by default, or yellow in night mode.
+Chameleon is a library that allows you write components that are styled differently depending on where they are in your app. A `Header` component might render at 40px by default, or at 35px within a `Panel`. It might be colored blue by default, or yellow in night mode.
 
-The goal of Chameleon is to allow you to completely separate styles from business logic: *never muck around with styles again!*
+The goal of Chameleon is to allow you to completely separate styles from business logic.
 
 ## Quick overview of how to use Chameleon
 
 In this quick overview, we'll use Chameleon to make `Section` and `Header` components. By default, a `Header` component will render at 40px. However, within a `Section`, it ·will render at 35px. Within two nested sections, it will render at 30px, and so on.
 
-* **Step 1**: Create your `UpdateContext` and `ContextProvider` components. To do this, you need to write a reducer. Chameleon comes with several, out-of-the-box reducers for you to use. However, we're going to make our own:
+* **Step 1**: Create your `UpdateContext` and `ContextProvider` components. To do this, you need to use a reducer. Chameleon comes with several, out-of-the-box reducers. However, we're going to write our own:
 
 ```js
 // StyleContext.js
@@ -55,6 +55,7 @@ export default ({ children }) => (<UpdateContext type="INCREMENT_SECTION_DEPTH">
 
 ```js
 // Header.js
+import styled from 'styled-components';
 import { ContextProvider } from './StyleContext';
 
 export default const ({ children }) => (<ContextProvider>{context => {
@@ -83,11 +84,11 @@ const MyArticle = () => (<div>
 
 Chameleon is for managing all aspects of style. For example:
 
-* It can manage the color palette or theme (e.g. "night mode" vs "day mode", or color schemes that vary across sections of a marketing site). Pair this with CSS transitions and watch your whole site effortlessly transition!
+* It can manage the color palette or theme (e.g. having separate night and day modes, or varying color schemes across sections of a marketing site). Pair this with CSS transitions and watch your whole site effortlessly transition!
 * It can modify the font size, color, etc. of elements when they are placed within a modal, panel or section, or when nested within two panels!
 * Turn off `pointer-events` and modify the `cursor` for a section of the site that is disabled, or which is behind a modal.
   * An interesting application could be a "report a bug" feature. When one clicks on a button saying "some part of the site isn't working", you could use Chameleon to intercept onClick events, but still allow the user to click on the broken piece of functionality.
-* Control flex, css grid or regular layout of children. For an example, form elements can render differently within an `InlineForm` or `Form`.
+* Control flex, css grid or regular layout of children. For an example, a `<FormGroup>` can render differently within an `InlineForm` or within a `Form`.
 * Padding: use Chameleon to control the left-padding of nested comments.
 * Manage heading levels, as in the previous example.
 
@@ -117,6 +118,8 @@ Note: You can also consider simplifying your action's API. `type="CHANGE_MODE" m
 
 ```js
 // StyleContext.js
+import styled from 'styled-components';
+
 class StyleContext {
   constructor(context) {
     this.context = context;
