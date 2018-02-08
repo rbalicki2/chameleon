@@ -72,9 +72,9 @@ export default const ({ children }) => (<ContextProvider>{context => {
 const MyArticle = () => (<div>
   <Header>How To Use Chameleon</Header>
   <Section>
-    <Header>This subheader is at 35px</Header>
+    <Header>This subheader has a font size of 35 pixels!</Header>
     <Section>
-      <Header>This sub-sub-header is at 30px! Neat!</Header>
+      <Header>This sub-sub-header has a font size of 30 pixels! Neat!</Header>
     </Section>
   </Section>
 </div>);
