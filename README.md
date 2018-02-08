@@ -81,13 +81,13 @@ const MyArticle = () => (<div>
 
 ## That was a silly, contrived example... what else should one use Chameleon for?
 
-Chameleon can be used to manage anything that's unrelated to the components used. For example:
+Chameleon is for managing all aspects of style. For example:
 
-* Color palette (e.g. "night mode" vs "day mode", or color schemes that vary across sections of a marketing site). Pair this with CSS transitions and watch your whole site transition!
-* Modify the font size, color, etc. of elements when they exist within a modal, panel or section, or when nested within two panels!
+* It can manage the color palette or theme (e.g. "night mode" vs "day mode", or color schemes that vary across sections of a marketing site). Pair this with CSS transitions and watch your whole site effortlessly transition!
+* It can modify the font size, color, etc. of elements when they are placed within a modal, panel or section, or when nested within two panels!
 * Turn off `pointer-events` and modify the `cursor` for a section of the site that is disabled, or which is behind a modal.
   * An interesting application could be a "report a bug" feature. When one clicks on a button saying "some part of the site isn't working", you could use Chameleon to intercept onClick events, but still allow the user to click on the broken piece of functionality.
-* Control flex or css grid layout of children.
+* Control flex, css grid or regular layout of children. For an example, form elements can render differently within an `InlineForm` or `Form`.
 * Padding: use Chameleon to control the left-padding of nested comments.
 * Manage heading levels, as in the previous example.
 
