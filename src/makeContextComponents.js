@@ -42,7 +42,6 @@ export default (contextReducer, initialContext, contextKey = 'styleContext') => 
   const updateContextGenerator = action => props => <UpdateContext {...action} {...props} />;
   const propertyComponentGenerator = getter => {
     return props => (<ContextProvider>{context => {
-      console.log('inside property component', context, getter);
       const Component = getter(context);
       return <Component {...props} />;
     }}</ContextProvider>)
