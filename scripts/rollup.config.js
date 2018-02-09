@@ -2,7 +2,7 @@ const babel = require('rollup-plugin-babel');
 
 const config = {
   input: 'src/index.js',
-  external: ['react'],
+  external: ['react', 'prop-types'],
   output: {
     globals: {
       react: 'React',
