@@ -17,5 +17,8 @@
     "babel-preset-react": "^6.24.1",
     "rollup": "^0.55.3",
     "rollup-plugin-babel": "^3.0.3"
+  },
+  "peerDependencies": {
+    "react": "^0.14.0 || ^15.0.0 || ^16.0.0"
   }
 }
