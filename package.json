@@ -1,0 +1,10 @@
+{
+  "name": "chameleon",
+  "author": "Robert Balicki <me@robertbalicki.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rbalicki2/chameleon.git"
+  },
+  "license": "MIT",
+  "scripts": {}
+}
