@@ -176,6 +176,16 @@ const contextReducer = (previousContext, action) => {
   return previousContext;
 }
 
+const initialContext = new StyleContext({
+  mode: 'DAY',
+  sectionDepth: 0,
+});
+
+const {
+  UpdateContext,
+  ContextProvider,
+} = makeContextComponents(contextReducer, initialContext);
+
 // Header.js
 export default (props) => (<ContextProvider>{ context =>
   <context.Header { ...props } />
