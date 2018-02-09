@@ -1,6 +1,13 @@
 {
   "name": "chameleon",
   "author": "Robert Balicki <me@robertbalicki.com>",
+  "keywords": [
+    "react",
+    "style",
+    "context",
+    "reducer"
+  ],
+  "version": "0.2.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/rbalicki2/chameleon.git"
