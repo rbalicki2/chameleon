@@ -75,6 +75,12 @@ const MyArticle = () => (<div>
 </div>);
 ```
 
+## Installation
+
+```bash
+yarn add chameleon
+```
+
 ## That was a silly, contrived example... what else should one use Chameleon for?
 
 Chameleon is for managing all aspects of style. For example:
@@ -238,3 +244,7 @@ You're right. Do what's right for your project!
 ## FAQ
 
 [Click here](FAQ.md).
+
+## License
+
+[Click here](LICENSE.md)
