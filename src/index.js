@@ -1,2 +1,3 @@
 export { default as makeContextComponents } from './makeContextComponents';
-export { default as simpleReducer } from './simpleReducer';
+import * as reducers from './reducers/index';
+export { reducers };

@@ -1,6 +1,7 @@
 {
   "presets": [
     ["es2015", { "modules": false }],
+    "stage-1",
     "react"
   ],
   "plugins": ["external-helpers", "transform-class-properties"]

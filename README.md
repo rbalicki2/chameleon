@@ -22,9 +22,7 @@ In this quick overview, we'll use Chameleon to make `<Section>` and `<Header>` c
 // StyleContext.js
 import { makeContextComponents } from 'chameleon';
 
-const initialContext = {
-  sectionDepth: 0,
-};
+const initialContext = { sectionDepth: 0 };
 const contextReducer = (previousContext, { type }) => {
   if (type === 'INCREMENT_SECTION_DEPTH') {
     return {
@@ -46,8 +44,6 @@ export {
 
 ```js
 // Section.js
-import { UpdateContext } from './StyleContext';
-
 export default ({ children }) => (<UpdateContext type="INCREMENT_SECTION_DEPTH">
   { children }
 </UpdateContext>);
@@ -57,9 +53,6 @@ export default ({ children }) => (<UpdateContext type="INCREMENT_SECTION_DEPTH">
 
 ```js
 // Header.js
-import styled from 'styled-components';
-import { ContextProvider } from './StyleContext';
-
 export default const ({ children }) => (<ContextProvider>{context => {
   const Header = styled.span`
     fontSize: ${40 - context.sectionDepth * 5}px; 
@@ -221,63 +214,26 @@ const Header = propertyComponentGenerator(context => context.Header);
 
 * Combine `<ContextProvider>` and `<UpdateContext>` to make components (such as `<Panel>`'s, `<Section>`'s and `<Modal>`'s) which are styled in a specific way and which also update their context.
 
+* Throw errors in your `contextReducer` if you're entering an invalid state. If, for example, you don't want modals within modals, ensure that with:
+
+```js
+case "ENTER_MODAL":
+  if (previousContext.isInModal) {
+    throw new Error('Cannot render nested modals');
+  }
+  return {
+    ...previousContext,
+    isInModal: true,
+  };
+```
+
 ## Chameleon doesn't need to be for only styles
 
 You're right. Do what's right for your project!
 
 ## Full API
 
-Throughout this section, we will use `<C>` or `C` to refer to the type of the context, and `<A>` or `A` to refer to the type of the action. If you're not familiar with generics, you can safely ignore those annotations.
-
-### function `makeContextComponents`
-
-`makeContextComponents` is a function which takes a reducer and an initial context, and returns `{ UpdateContext, ContextProvider, updateContextGenerator, propertyComponentGenerator }`.
-
-Signature: 
-```js
-(Reducer<C, A>, C) => {
-  UpdateContext: UpdateContext<A>,
-  ContextProvider: ContextProvider<C>,
-  updateContextGenerator: UpdateContextGenerator<A>,
-  propertyComponentGenerator: PropertyComponentGenerator<C>,
-}
-```
-
-### type `Reducer<C, A>`
-
-This is a function that takes the oldContext and the action, and returns a new context. It's signature is:
-```js
-(C, A) => C
-```
-
-### type `UpdateContext<A>`
-
-A component whose props are of type `<A>` and which renders its children.
-
-### type `ContextProvider<C>`
-
-A render-prop component which passes the current context, of type `C` to its children.
-
-### type `UpdateContextGenerator<A>`
-
-A function that takes an action, and which returns a component that always passes the same action to the reducer.
-
-### type `PropertyComponentGenerator<C>`
-
-A function whose signature is:
-
-```js
-(C => component) => component
-```
-
-An example can illustrate this better. The following are equivalent:
-
-```js
-const Header = (props) => (<ContextProvider>{ context =>
-  <context.Header { ...props } />
-}</ContextProvider>);
-const Header = propertyComponentGenerator(context => context.Header);
-```
+[Click here.](FULL_API.md)
 
 ## FAQ
 
