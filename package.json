@@ -5,7 +5,11 @@
     "react",
     "style",
     "context",
-    "reducer"
+    "reducer",
+    "render prop",
+    "css in js",
+    "styling",
+    "reactjs"
   ],
   "version": "0.2.0",
   "repository": {
