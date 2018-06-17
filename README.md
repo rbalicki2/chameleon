@@ -168,9 +168,9 @@ class StyleContext {
 
 const contextReducer = (previousContext, action) => {
   switch (action.type) {
-    case "INCREMENT_SECTION_DEPTH":
+    case 'INCREMENT_SECTION_DEPTH':
       return previousContext.incrementSectionDepth();
-    // ... case "CHANGE_MODE": ...
+    // ... case 'CHANGE_MODE': ...
   }
   return previousContext;
 }
@@ -223,7 +223,7 @@ const Header = propertyComponentGenerator(context => context.Header);
 * Throw errors in your `contextReducer` if you're entering an invalid state. If, for example, you don't want modals within modals, ensure that with:
 
 ```js
-case "ENTER_MODAL":
+case 'ENTER_MODAL':
   if (previousContext.isInModal) {
     throw new Error('Cannot render nested modals');
   }
